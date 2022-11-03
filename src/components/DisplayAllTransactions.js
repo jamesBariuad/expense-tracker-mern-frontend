@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import DeleteTransaction from "./DeleteTransaction";
 import EditTransaction from "./EditTransaction";
 import styles from "./DisplayAllTransactions.module.css";

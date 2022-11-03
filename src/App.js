@@ -1,9 +1,9 @@
 import { useEffect, useReducer, useState } from "react";
 import axios from "axios";
 // import DisplayAccounts from "./components/DisplayAccounts";
-import DisplayIncome from "./components/DisplayIncome";
+// import DisplayIncome from "./components/DisplayIncome";
 import AddTransaction from "./components/AddTransaction";
-import DisplayExpense from "./components/DisplayExpense";
+// import DisplayExpense from "./components/DisplayExpense";
 import DisplayAllTransactions from "./components/DisplayAllTransactions";
 import "./App.css";
 import Stats from "./components/Stats";

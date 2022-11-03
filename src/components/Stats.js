@@ -1,7 +1,7 @@
 import React from "react";
 import DisplayExpense from "./DisplayExpense";
 import DisplayIncome from "./DisplayIncome";
-import IncomeChart from "./IncomeChart";
+// import IncomeChart from "./IncomeChart";
 import styles from "./Stats.module.css";
 
 const Stats = ({ income, expense }) => {

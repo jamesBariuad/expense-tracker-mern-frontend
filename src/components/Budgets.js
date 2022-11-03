@@ -5,16 +5,16 @@ import { useState } from "react";
 import AddBudget from "./AddBudget";
 import DeleteBudget from "./DeleteBudget";
 
-const Budgets = ({  }) => {
+const Budgets = () => {
   const [budgetData, setBudgetData] = useState([]);
   const [monthlyExpense, setMonthlyExpense] = useState([]);
   const [toggleAddBudget, setToggleAddBudget] = useState(false);
 
-  
-
   useEffect(() => {
     axios
-      .get("https://expense-tracker-backend-mern.herokuapp.com/api/v1/expense/date/datenow")
+      .get(
+        "https://expense-tracker-backend-mern.herokuapp.com/api/v1/expense/date/datenow"
+      )
       .then((response) => setMonthlyExpense(response.data));
     axios
       .get("https://expense-tracker-backend-mern.herokuapp.com/api/v1/budgets")
@@ -25,8 +25,11 @@ const Budgets = ({  }) => {
     axios
       .get("https://expense-tracker-backend-mern.herokuapp.com/api/v1/budgets")
       .then(
-        (response) => response.status=200?(setBudgetData(response.data),
-        setToggleAddBudget(!toggleAddBudget)):false
+        (response) =>
+          (response.status = 200
+            ? (setBudgetData(response.data),
+              setToggleAddBudget(!toggleAddBudget))
+            : false)
       );
   };
 
@@ -60,11 +63,15 @@ const Budgets = ({  }) => {
   };
   const deleteConfirmed = (clickedId) => {
     axios
-      .delete(`https://expense-tracker-backend-mern.herokuapp.com/api/v1/budgets/${clickedId}`)
+      .delete(
+        `https://expense-tracker-backend-mern.herokuapp.com/api/v1/budgets/${clickedId}`
+      )
       .then((response) =>
         response.status === 200
           ? axios
-              .get("https://expense-tracker-backend-mern.herokuapp.com/api/v1/budgets")
+              .get(
+                "https://expense-tracker-backend-mern.herokuapp.com/api/v1/budgets"
+              )
               .then((response) => setBudgetData(response.data))
               .then(toggleDelete())
           : false
@@ -117,15 +124,27 @@ const Budgets = ({  }) => {
         current spend: ₱{getSumOfCategory(budget.category).toLocaleString()}
       </div>
 
-      {budget.amount - getSumOfCategory(budget.category)<0?<div className={styles.remspend}>
-        remaining spend: 
-        <div className={styles.exceed}>₱{(budget.amount - getSumOfCategory(budget.category)).toLocaleString()}</div>
-      </div>:
-      <div className={styles.remspend}>
-      remaining spend: 
-      <div className={styles.notexceed}>₱{(budget.amount - getSumOfCategory(budget.category)).toLocaleString()}</div>
-    </div>}
-     
+      {budget.amount - getSumOfCategory(budget.category) < 0 ? (
+        <div className={styles.remspend}>
+          remaining spend:
+          <div className={styles.exceed}>
+            ₱
+            {(
+              budget.amount - getSumOfCategory(budget.category)
+            ).toLocaleString()}
+          </div>
+        </div>
+      ) : (
+        <div className={styles.remspend}>
+          remaining spend:
+          <div className={styles.notexceed}>
+            ₱
+            {(
+              budget.amount - getSumOfCategory(budget.category)
+            ).toLocaleString()}
+          </div>
+        </div>
+      )}
     </div>
   ));
 
