@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.gridcontainer {
+  display: grid;
+  width: 80%;
+  height: 90%;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 5% 95%;
+}
+
+.header{
+    grid-area: 1/1/2/3;
+    margin: auto;
+    text-align: center;
+}
+
+.incomearea{
+    grid-area: 2/1/3/2;
+    display: grid;
+    grid-template-rows: 5% 90%;
+  
+    /* display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center; */
+    
+}
+
+.expensearea{
+    grid-area: 2/2/3/3;
+    display: grid;
+    grid-template-rows: 5% 90%;
+}
+ 
+.head{
+    grid-area: 1/1/2/2;
+    margin: auto;
+    text-align: center;
+    height: 10%;
+    width: 100%;
+} 
+
+.data{
+    grid-area: 2/1/3/2;
+    display: flex;
+    justify-content: center;
+    
+}
