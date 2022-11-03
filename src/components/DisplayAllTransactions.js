@@ -57,9 +57,9 @@ const DisplayAllTransactions = ({ income, expense, dispatch }) => {
         <p>{item?.description}</p>
 
         {item?.type === "income" ? (
-          <p className={styles.income}>+₱ {item?.value.toLocaleString()}</p>
+          <p className={styles.income}>+₱ {item?.value?.toLocaleString()}</p>
         ) : (
-          <p className={styles.expense}>-₱ {item?.value.toLocaleString()}</p>
+          <p className={styles.expense}>-₱ {item?.value?.toLocaleString()}</p>
         )}
 
         <div className={styles.buttons}>
