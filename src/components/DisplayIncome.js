@@ -3,7 +3,7 @@ import IncomeChart from "./IncomeChart";
 import styles from "./IncomeExpense.module.css";
 
 const DisplayIncome = ({ income }) => {
-  const sortedHiToLow = income.sort((a, b) => b.value - a.value);
+  const sortedHiToLow = income?.sort((a, b) => b.value - a.value);
 
   let totalPerCategory = [];
   const addSum = (cat) => {
@@ -25,11 +25,11 @@ const DisplayIncome = ({ income }) => {
   uniqueCategories.forEach(addSum);
 
   const incomeData = {
-    labels: uniqueCategories.map((category) => category),
+    labels: uniqueCategories?.map((category) => category),
     datasets: [
       {
         label: "income chart",
-        data: totalPerCategory.map((sum) => sum),
+        data: totalPerCategory?.map((sum) => sum),
         backgroundColor: [
           "#fbb34c",
           "#fcc46c",
@@ -54,7 +54,7 @@ const DisplayIncome = ({ income }) => {
   //   </div>
   // ));
 
-  const display = uniqueCategories.map((cat,i)=>
+  const display = uniqueCategories?.map((cat,i)=>
      <div key={cat} className={styles.transactionItems}>{cat}: <div id={styles.income}>+₱{totalPerCategory[i].toLocaleString()}</div></div>
   )
 

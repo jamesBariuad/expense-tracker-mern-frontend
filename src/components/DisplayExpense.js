@@ -3,12 +3,12 @@ import ExpenseChart from "./ExpenseChart";
 import styles from "./IncomeExpense.module.css";
 
 const DisplayExpense = ({ expense }) => {
-  const sortedHiToLow = expense.sort((a, b) => b.value - a.value);
+  const sortedHiToLow = expense?.sort((a, b) => b.value - a.value);
   
   let totalPerCategory = [];
   const addSum = (cat) => {
     let sum = 0;
-    sortedHiToLow.map((item) => {
+    sortedHiToLow?.map((item) => {
       //checks if the category of the array is same as the element in the uniquecategory
       if (item.category === cat) {
         sum += item.value;
@@ -19,17 +19,17 @@ const DisplayExpense = ({ expense }) => {
   };
 
   const uniqueCategories = [
-    ...new Set(sortedHiToLow.map((income) => income.category)),
+    ...new Set(sortedHiToLow?.map((income) => income.category)),
   ];
 
-  uniqueCategories.forEach(addSum);
+  uniqueCategories?.forEach(addSum);
 
   const expenseData = {
-    labels: uniqueCategories.map((category) => category),
+    labels: uniqueCategories?.map((category) => category),
     datasets: [
       {
         label: "expense chart",
-        data: totalPerCategory.map((sum) => sum),
+        data: totalPerCategory?.map((sum) => sum),
         backgroundColor: [
           "#fbb34c",
           "#fcc46c",
@@ -43,7 +43,7 @@ const DisplayExpense = ({ expense }) => {
   };
 
   
-  const display = uniqueCategories.map((cat,i)=>
+  const display = uniqueCategories?.map((cat,i)=>
      <div key={cat} className={styles.transactionItems}>{cat}: <div id={styles.expense}>-₱{totalPerCategory[i].toLocaleString()}</div></div>
   )
 
