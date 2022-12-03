@@ -47,7 +47,10 @@ function App() {
 
       case "ADD_TRANSACTION_INCOME":
         axios
-          .post("https://expensetracker-apiv2.onrender.com/api/v1/income", action.payload)
+          .post(
+            "https://expensetracker-apiv2.onrender.com/api/v1/income",
+            action.payload
+          )
           .then((response) =>
             axios
               .get("https://expensetracker-apiv2.onrender.com/api/v1/income")
@@ -63,7 +66,10 @@ function App() {
 
       case "ADD_TRANSACTION_EXPENSE":
         axios
-          .post("https://expensetracker-apiv2.onrender.com/api/v1/expense", action.payload)
+          .post(
+            "https://expensetracker-apiv2.onrender.com/api/v1/expense",
+            action.payload
+          )
           .then((response) =>
             axios
               .get("https://expensetracker-apiv2.onrender.com/api/v1/expense")
@@ -80,7 +86,9 @@ function App() {
 
       case "DELETE_INCOME":
         axios
-          .delete(`https://expensetracker-apiv2.onrender.com/api/v1/income/${action.payload.id}`)
+          .delete(
+            `https://expensetracker-apiv2.onrender.com/api/v1/income/${action.payload.id}`
+          )
           .then((response) => {});
         return {
           ...state,
@@ -91,7 +99,9 @@ function App() {
 
       case "DELETE_EXPENSE":
         axios
-          .delete(`https://expensetracker-apiv2.onrender.com/api/v1/expense/${action.payload.id}`)
+          .delete(
+            `https://expensetracker-apiv2.onrender.com/api/v1/expense/${action.payload.id}`
+          )
           .then((response) => {});
         return {
           ...state,
@@ -147,30 +157,38 @@ function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    axios.get("https://expensetracker-apiv2.onrender.com/api/v1/accounts").then((response) => {
-      dispatch({
-        type: "LOAD_ACCOUNTS",
-        payload: response.data,
+    axios
+      .get("https://expensetracker-apiv2.onrender.com/api/v1/accounts")
+      .then((response) => {
+        dispatch({
+          type: "LOAD_ACCOUNTS",
+          payload: response.data,
+        });
       });
-    });
-    axios.get("https://expensetracker-apiv2.onrender.com/api/v1/budgets").then((response) => {
-      dispatch({
-        type: "LOAD_BUDGETS",
-        payload: response.data,
+    axios
+      .get("https://expensetracker-apiv2.onrender.com/api/v1/budgets")
+      .then((response) => {
+        dispatch({
+          type: "LOAD_BUDGETS",
+          payload: response.data,
+        });
       });
-    });
-    axios.get("https://expensetracker-apiv2.onrender.com/api/v1/income").then((response) => {
-      dispatch({
-        type: "LOAD_ALL_INCOME",
-        payload: response.data,
+    axios
+      .get("https://expensetracker-apiv2.onrender.com/api/v1/income")
+      .then((response) => {
+        dispatch({
+          type: "LOAD_ALL_INCOME",
+          payload: response.data,
+        });
       });
-    });
-    axios.get("https://expensetracker-apiv2.onrender.com/api/v1/expense").then((response) => {
-      dispatch({
-        type: "LOAD_ALL_EXPENSE",
-        payload: response.data,
+    axios
+      .get("https://expensetracker-apiv2.onrender.com/api/v1/expense")
+      .then((response) => {
+        dispatch({
+          type: "LOAD_ALL_EXPENSE",
+          payload: response.data,
+        });
       });
-    });
   }, []);
 
   const [addTransaction, setAddTransaction] = useState(false);
@@ -185,12 +203,14 @@ function App() {
   const [currentTab, setCurrentTab] = useState("transactions");
 
   const reloadBudgets = () => {
-    axios.get("https://expensetracker-apiv2.onrender.com/api/v1/budgets").then((response) => {
-      dispatch({
-        type: "LOAD_BUDGETS",
-        payload: response.data,
+    axios
+      .get("https://expensetracker-apiv2.onrender.com/api/v1/budgets")
+      .then((response) => {
+        dispatch({
+          type: "LOAD_BUDGETS",
+          payload: response.data,
+        });
       });
-    });
   };
 
   // const [clicked, setClicked] = useState(true)
@@ -222,34 +242,54 @@ function App() {
             Transactions
           </button>
         )}
-        {currentTab==="stats"?<button style={{ backgroundColor: "#B5B5B5" }} value="stats" onClick={handleNavClick}>
-          Stats
-        </button>:<button value="stats" onClick={handleNavClick}>
-          Stats
-        </button>}
-        {currentTab==="budget"?<button style={{ backgroundColor: "#B5B5B5" }} value="budget" onClick={handleNavClick}>
-          Budget
-        </button>:<button value="budget" onClick={handleNavClick}>
-          Budget
-        </button>}
-      </nav>
-      <div className="displayarea">
-        {currentTab === "transactions" && (state.income.length===0 || state.expense.length===0) ? (
-          <LoadingDisplay/>
+        {currentTab === "stats" ? (
+          <button
+            style={{ backgroundColor: "#B5B5B5" }}
+            value="stats"
+            onClick={handleNavClick}
+          >
+            Stats
+          </button>
         ) : (
-          <DisplayAllTransactions
-            income={state?.income}
-            expense={state?.expense}
-            dispatch={dispatch}
-          />
+          <button value="stats" onClick={handleNavClick}>
+            Stats
+          </button>
         )}
-        {currentTab === "stats" && (
-          <Stats income={state.income} expense={state.expense} />
+        {currentTab === "budget" ? (
+          <button
+            style={{ backgroundColor: "#B5B5B5" }}
+            value="budget"
+            onClick={handleNavClick}
+          >
+            Budget
+          </button>
+        ) : (
+          <button value="budget" onClick={handleNavClick}>
+            Budget
+          </button>
         )}
-        {currentTab === "budget" && (
-          <Budgets expense={state.expense} budgets={state.budgets} />
-        )}
-      </div>
+      </nav>
+      {state.income.length === 0 || state.expense.length === 0 ? (
+        <div className="displayarea">
+          <LoadingDisplay />
+        </div>
+      ) : (
+        <div className="displayarea">
+          {currentTab === "transactions" && (
+            <DisplayAllTransactions
+              income={state?.income}
+              expense={state?.expense}
+              dispatch={dispatch}
+            />
+          )}
+          {currentTab === "stats" && (
+            <Stats income={state.income} expense={state.expense} />
+          )}
+          {currentTab === "budget" && (
+            <Budgets expense={state.expense} budgets={state.budgets} />
+          )}
+        </div>
+      )}
     </div>
   );
 }

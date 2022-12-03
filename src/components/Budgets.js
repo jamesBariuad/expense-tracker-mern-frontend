@@ -4,6 +4,7 @@ import styles from "./Budgets.module.css";
 import { useState } from "react";
 import AddBudget from "./AddBudget";
 import DeleteBudget from "./DeleteBudget";
+import LoadingDisplay from "./LoadingDisplay";
 
 const Budgets = () => {
   const [budgetData, setBudgetData] = useState([]);
@@ -172,7 +173,14 @@ const Budgets = () => {
         false
       )}
 
-      <div className={styles.data}>{displayBudgets}</div>
+      {
+        budgetData.length===0?
+        <div className={styles.data}><LoadingDisplay/></div>
+        :
+        <div className={styles.data}>{displayBudgets}</div>
+      }
+
+      
     </div>
   );
 };
