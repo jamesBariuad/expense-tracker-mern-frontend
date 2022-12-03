@@ -37,7 +37,7 @@ const AddBudget = ({ toggleBudget }) => {
     budgetDetails.amount === 0
       ? alert("input an amount")
       : axios
-          .post("https://expense-tracker-backend-mern.herokuapp.com/api/v1/budgets", budgetDetails)
+          .post("https://expensetracker-apiv2.onrender.com/api/v1/budgets", budgetDetails)
           .then(response => response.status===200?toggleBudget():false);
   };
 

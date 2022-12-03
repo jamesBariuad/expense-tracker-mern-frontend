@@ -8,6 +8,7 @@ import DisplayAllTransactions from "./components/DisplayAllTransactions";
 import "./App.css";
 import Stats from "./components/Stats";
 import Budgets from "./components/Budgets";
+import LoadingDisplay from "./components/LoadingDisplay";
 
 function App() {
   const initialState = {
@@ -46,10 +47,10 @@ function App() {
 
       case "ADD_TRANSACTION_INCOME":
         axios
-          .post("https://expense-tracker-backend-mern.herokuapp.com/api/v1/income", action.payload)
+          .post("https://expensetracker-apiv2.onrender.com/api/v1/income", action.payload)
           .then((response) =>
             axios
-              .get("https://expense-tracker-backend-mern.herokuapp.com/api/v1/income")
+              .get("https://expensetracker-apiv2.onrender.com/api/v1/income")
               .then((response) => {
                 dispatch({
                   type: "LOAD_ALL_INCOME",
@@ -62,10 +63,10 @@ function App() {
 
       case "ADD_TRANSACTION_EXPENSE":
         axios
-          .post("https://expense-tracker-backend-mern.herokuapp.com/api/v1/expense", action.payload)
+          .post("https://expensetracker-apiv2.onrender.com/api/v1/expense", action.payload)
           .then((response) =>
             axios
-              .get("https://expense-tracker-backend-mern.herokuapp.com/api/v1/expense")
+              .get("https://expensetracker-apiv2.onrender.com/api/v1/expense")
               .then((response) => {
                 dispatch({
                   type: "LOAD_ALL_EXPENSE",
@@ -79,7 +80,7 @@ function App() {
 
       case "DELETE_INCOME":
         axios
-          .delete(`https://expense-tracker-backend-mern.herokuapp.com/api/v1/income/${action.payload.id}`)
+          .delete(`https://expensetracker-apiv2.onrender.com/api/v1/income/${action.payload.id}`)
           .then((response) => {});
         return {
           ...state,
@@ -90,7 +91,7 @@ function App() {
 
       case "DELETE_EXPENSE":
         axios
-          .delete(`https://expense-tracker-backend-mern.herokuapp.com/api/v1/expense/${action.payload.id}`)
+          .delete(`https://expensetracker-apiv2.onrender.com/api/v1/expense/${action.payload.id}`)
           .then((response) => {});
         return {
           ...state,
@@ -102,7 +103,7 @@ function App() {
       case "EDIT_EXPENSE":
         axios
           .put(
-            `https://expense-tracker-backend-mern.herokuapp.com/api/v1/expense/${action.payload.id}`,
+            `https://expensetracker-apiv2.onrender.com/api/v1/expense/${action.payload.id}`,
             action.payload
           )
           .then((response) => {});
@@ -121,7 +122,7 @@ function App() {
       case "EDIT_INCOME":
         axios
           .put(
-            `https://expense-tracker-backend-mern.herokuapp.com/api/v1/income/${action.payload.id}`,
+            `https://expensetracker-apiv2.onrender.com/api/v1/income/${action.payload.id}`,
             action.payload
           )
           .then((response) => {});
@@ -146,25 +147,25 @@ function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    axios.get("https://expense-tracker-backend-mern.herokuapp.com/api/v1/accounts").then((response) => {
+    axios.get("https://expensetracker-apiv2.onrender.com/api/v1/accounts").then((response) => {
       dispatch({
         type: "LOAD_ACCOUNTS",
         payload: response.data,
       });
     });
-    axios.get("https://expense-tracker-backend-mern.herokuapp.com/api/v1/budgets").then((response) => {
+    axios.get("https://expensetracker-apiv2.onrender.com/api/v1/budgets").then((response) => {
       dispatch({
         type: "LOAD_BUDGETS",
         payload: response.data,
       });
     });
-    axios.get("https://expense-tracker-backend-mern.herokuapp.com/api/v1/income").then((response) => {
+    axios.get("https://expensetracker-apiv2.onrender.com/api/v1/income").then((response) => {
       dispatch({
         type: "LOAD_ALL_INCOME",
         payload: response.data,
       });
     });
-    axios.get("https://expense-tracker-backend-mern.herokuapp.com/api/v1/expense").then((response) => {
+    axios.get("https://expensetracker-apiv2.onrender.com/api/v1/expense").then((response) => {
       dispatch({
         type: "LOAD_ALL_EXPENSE",
         payload: response.data,
@@ -184,7 +185,7 @@ function App() {
   const [currentTab, setCurrentTab] = useState("transactions");
 
   const reloadBudgets = () => {
-    axios.get("https://expense-tracker-backend-mern.herokuapp.com/api/v1/budgets").then((response) => {
+    axios.get("https://expensetracker-apiv2.onrender.com/api/v1/budgets").then((response) => {
       dispatch({
         type: "LOAD_BUDGETS",
         payload: response.data,
@@ -233,14 +234,14 @@ function App() {
         </button>}
       </nav>
       <div className="displayarea">
-        {currentTab === "transactions" ? (
+        {currentTab === "transactions" && (state.income.length===0 || state.expense.length===0) ? (
+          <LoadingDisplay/>
+        ) : (
           <DisplayAllTransactions
             income={state?.income}
             expense={state?.expense}
             dispatch={dispatch}
           />
-        ) : (
-          false
         )}
         {currentTab === "stats" && (
           <Stats income={state.income} expense={state.expense} />

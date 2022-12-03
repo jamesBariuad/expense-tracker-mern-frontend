@@ -13,17 +13,17 @@ const Budgets = () => {
   useEffect(() => {
     axios
       .get(
-        "https://expense-tracker-backend-mern.herokuapp.com/api/v1/expense/date/datenow"
+        "https://expensetracker-apiv2.onrender.com/api/v1/expense/date/datenow"
       )
       .then((response) => setMonthlyExpense(response.data));
     axios
-      .get("https://expense-tracker-backend-mern.herokuapp.com/api/v1/budgets")
+      .get("https://expensetracker-apiv2.onrender.com/api/v1/budgets")
       .then((response) => setBudgetData(response.data));
   }, []);
 
   const toggleBudget = () => {
     axios
-      .get("https://expense-tracker-backend-mern.herokuapp.com/api/v1/budgets")
+      .get("https://expensetracker-apiv2.onrender.com/api/v1/budgets")
       .then(
         (response) =>
           (response.status = 200
@@ -64,13 +64,13 @@ const Budgets = () => {
   const deleteConfirmed = (clickedId) => {
     axios
       .delete(
-        `https://expense-tracker-backend-mern.herokuapp.com/api/v1/budgets/${clickedId}`
+        `https://expensetracker-apiv2.onrender.com/api/v1/budgets/${clickedId}`
       )
       .then((response) =>
         response.status === 200
           ? axios
               .get(
-                "https://expense-tracker-backend-mern.herokuapp.com/api/v1/budgets"
+                "https://expensetracker-apiv2.onrender.com/api/v1/budgets"
               )
               .then((response) => setBudgetData(response.data))
               .then(toggleDelete())
